@@ -5,7 +5,7 @@ import { useForm } from 'antd/lib/form/Form';
 import { NavLink } from 'react-router-dom';
 
 import classes from './Auth.module.css';
-import { authActions } from '../store/auth';
+import { authActions } from '../../store/auth';
 
 const Auth = () => {
   const dispatch = useDispatch();
@@ -39,10 +39,11 @@ const Auth = () => {
       {pwderror && <Alert style={{marginBottom:"5px"}} message="password does not match" type="error" showIcon closable />}
       
       <section>
+            <h1 style={{marginBottom:'20px'}}>Login To Vet App</h1>
             <Form
               form={loginform}
               name="basic"
-              labelCol={{ span: 8 }}
+              labelCol={{ span: 6 }}
               wrapperCol={{ span: 16 }}
               initialValues={{ remember: true }}
               onFinish={onFinish}
@@ -78,12 +79,12 @@ const Auth = () => {
 
               <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Row>
-                  <Col span={8}>
+                  <Col span={6}>
                   <Button type="primary" htmlType="submit">
                     Submit
                   </Button>
                   </Col>
-                  <Col span={8}>
+                  <Col span={3}>
                   <Button htmlType="button" onClick={onReset}>
                     Reset
                   </Button>

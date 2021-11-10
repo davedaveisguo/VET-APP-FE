@@ -4,9 +4,9 @@ import { Route } from 'react-router-dom';
 
 
 import Header from './components/Header';
-import Auth from './components/Auth';
+import Auth from './components/Auth/Auth';
 import UserProfile from './components/UserProfile';
-import ResetPwd from './components/ResetPwd';
+import ResetPwd from './components/Auth/ResetPwd';
 import UserMgt from './components/Mgt/UserMgt';
 
 
@@ -24,7 +24,7 @@ function App() {
         {isAuth && <UserProfile />}
       </Route>
       <Route path="/pwdReset">
-          <ResetPwd />
+      {!isAuth &&  <ResetPwd />} 
       </Route>
       <Route path="/userMgt">
         {!isAuth && <Auth />}
