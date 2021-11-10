@@ -2,3 +2,10 @@
 
 Ant Design Reference:
 https://ant.design/index-cn
+
+
+To run the application:
+
+npm install
+
+npm start
