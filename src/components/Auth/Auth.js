@@ -53,7 +53,7 @@ const Auth = () => {
               <Form.Item
                 label="Email"
                 name="email"
-                rules={[{ required: true, message: 'Please input your email!' }]}
+                rules={[{ required: true, message: 'Please input valid email!',type: 'string', pattern: /^([a-z0-9_.-]+)@([\da-z.-]+).([a-z.]{2,6})$/ }]}
               >
                 <Input />
               </Form.Item>
