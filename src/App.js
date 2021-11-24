@@ -5,13 +5,18 @@ import { Route } from 'react-router-dom';
 
 import Header from './components/Header';
 import Auth from './components/Auth/Auth';
-import UserProfile from './components/UserProfile';
 import ResetPwd from './components/Auth/ResetPwd';
 import UserMgt from './components/Mgt/UserMgt';
 import UserEdit from './components/Mgt/UserEdit';
+import { authActions } from './store/auth';
+import { useDispatch } from 'react-redux';
 
 
 function App() {
+  const dispatch = useDispatch();
+  if(sessionStorage.getItem("token")){
+    dispatch(authActions.login());
+  }
   const isAuth = useSelector(state => state.auth.isAuthenticated);
 
   return (
@@ -22,7 +27,7 @@ function App() {
       <main>
       <Route path="/" exact>
         {!isAuth && <Auth />}
-        {isAuth && <UserProfile />}
+        {isAuth && <UserMgt />}
       </Route>
       <Route path="/pwdReset">
       {!isAuth &&  <ResetPwd />} 

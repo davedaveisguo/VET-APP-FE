@@ -3,14 +3,21 @@ import { NavLink } from 'react-router-dom';
 
 import classes from './Header.module.css';
 import { authActions } from '../store/auth';
+import { Popconfirm, message } from 'antd';
 
 const Header = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
 
-  const logoutHandler = () => {
+
+  function confirm(e) {
+    sessionStorage.removeItem("token");
     dispatch(authActions.logout());
-  };
+  }
+  
+  function cancel(e) {
+    message.error('Ohhh let us stay here');
+  }
 
   return (
     <header className={classes.header}>
@@ -19,9 +26,17 @@ const Header = () => {
         <nav>
           <ul>
             <li>
-            <button onClick={logoutHandler}>
+            <Popconfirm
+              title="Are you sure to log out?"
+              onConfirm={confirm}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+            <button>
               LogOut
             </button>
+            </Popconfirm>
             </li>
           </ul>
         </nav>

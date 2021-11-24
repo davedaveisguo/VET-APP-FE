@@ -3,6 +3,7 @@ import { Button, Alert,Form, Input,Row, Col } from 'antd';
 import { useState } from 'react';
 import { useForm } from 'antd/lib/form/Form';
 import { NavLink } from 'react-router-dom';
+import axios from '../Api/request';
 
 import classes from './Auth.module.css';
 import { authActions } from '../../store/auth';
@@ -10,6 +11,7 @@ import { authActions } from '../../store/auth';
 const Auth = () => {
   const dispatch = useDispatch();
   const [pwderror, setpwderror] = useState(false);
+  const [errorMsg, seterrorMsg] = useState("");
   const [loginform] = useForm();
 
   const onFinish = (values) => {
@@ -17,10 +19,20 @@ const Auth = () => {
     var cofpwd = values.confirmpwd;
     if(pwd!=cofpwd){
       setpwderror(true);
+      seterrorMsg("password doesn not match");
       return;
     }
+
+    axios.post("/api/auth/signin",{username: values.username, password: values.password})
+      .then(res=> {
+          sessionStorage.setItem("token", res.data.accessToken);
+          dispatch(authActions.login());
+      }).catch(function (error) {
+        setpwderror(true);
+        seterrorMsg("credential check failed");
+    });
     
-    dispatch(authActions.login());
+    
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -36,7 +48,7 @@ const Auth = () => {
   return (
     <main className={classes.auth}>
       
-      {pwderror && <Alert style={{marginBottom:"5px"}} message="password does not match" type="error" showIcon closable />}
+      {pwderror && <Alert style={{marginBottom:"5px"}} message={errorMsg} type="error" showIcon closable />}
       
       <section>
             <h1 style={{marginBottom:'20px'}}>Login To Vet App</h1>
@@ -51,9 +63,9 @@ const Auth = () => {
               autoComplete="off"
             >
               <Form.Item
-                label="Email"
-                name="email"
-                rules={[{ required: true, message: 'Please input valid email!',type: 'string', pattern: /^([a-z0-9_.-]+)@([\da-z.-]+).([a-z.]{2,6})$/ }]}
+                label="User Name"
+                name="username"
+                rules={[{ required: true, message: 'Please input username!'}]}
               >
                 <Input />
               </Form.Item>

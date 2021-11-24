@@ -1,11 +1,11 @@
 import React from 'react'
 import Transition from '../Static/Transition'
 import { useParams } from "react-router-dom";
-import { userdata } from '../DummyData/dummy';
 import { Form, Input, Button,DatePicker,Row,Col,Select } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { useEffect } from 'react';
 import { roledata } from '../DummyData/dummy';
+import axios from '../Api/request';
 import moment from 'moment';
 
 
@@ -13,11 +13,21 @@ export default function UserEdit() {
     const { Option } = Select;
     const [userForm] = useForm();
     let { id } = useParams();
-    const data = userdata.filter(da=>da.key==id);
+    const data = [];
 
 
     useEffect(() => {
-        userForm.setFieldsValue(data[0]);
+        axios.get("api/user/getuserById?id="+id)
+        .then(res=>{   
+          data.push({
+            ...res.data.data,
+            key:res.data.data.id,
+            dob: moment(new Date(res.data.data.dob)),
+            createdAt:moment(new Date(res.data.data.createdAt)),
+            role:res.data.data.roles[0].roleName
+          });
+          userForm.setFieldsValue(data[0]); 
+        })
     }, [data])
 
     
@@ -45,30 +55,18 @@ export default function UserEdit() {
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 16 }}
         name="dynamic_rule">
-            
+
             <Form.Item
-                name="fname"
-                label="First Name"
+                name="username"
+                label="User Name"
                 rules={[
                 {
                     required: true,
-                    message: 'Please input your first name',
+                    message: 'Please input your user name',
                 },
                 ]}
             >
-                <Input placeholder="Please input your first name" />
-            </Form.Item>
-            <Form.Item
-                name="lname"
-                label="Last Name"
-                rules={[
-                {
-                    required: true,
-                    message: 'Please input your last name',
-                },
-                ]}
-            >
-                <Input placeholder="Please input your last name" />
+                <Input placeholder="Please input your user name" />
             </Form.Item>
             <Form.Item
                 name="phone"
@@ -92,7 +90,7 @@ export default function UserEdit() {
                 },
                 ]}
             >
-                <DatePicker />
+                <DatePicker  format="YYYY-MM-DD" />
             </Form.Item>
             <Form.Item
                 name="role"
