@@ -29,17 +29,25 @@ const UserMgt = () => {
             key:ud.id,
             dob: moment(ud.dob).format('YYYY/MM/DD'),
             createdAt:moment(ud.createdAt).format('YYYY/MM/DD'),
-            role:ud.roles[0].roleName
+            role:ud.roles?ud.roles[0].roleName:"ROLE_ADMIN"
           })
       });
+
+
+      const addUser = () => {
+        history.push(`/userMgt/addUser`)
+      };
 
 
 
 
     
 
-      function confirm(e) {
-        message.success('Click on Yes');
+      function confirm(key) {
+        axios.delete("api/user/deleteById?id="+key)
+        .then(res=>{
+          console.log(res.data.message);  
+        })
       }
       
       function cancel(e) {
@@ -50,6 +58,7 @@ const UserMgt = () => {
       function editUser(key) {
          history.push(`/userMgt/${key}/edit`)
       };
+
 
 
     const columns = [
@@ -77,7 +86,7 @@ const UserMgt = () => {
                 <Button onClick={() => editUser(record.key)}>Edit</Button>
                 <Popconfirm
                         title="Are you sure to delete this record?"
-                        onConfirm={confirm}
+                        onConfirm={() => confirm(record.key)}
                         onCancel={cancel}
                         okText="Yes"
                         cancelText="No"
@@ -101,8 +110,13 @@ const UserMgt = () => {
         </Col>
         <Col span={16} style={{marginTop:"20px"}}>
            <h1>User Management</h1>
+                            
            <Table bordered columns={columns} dataSource={data} />
         </Col>
+        <Col span={2} style={{marginTop:"20px", marginLeft:"-90px"}}>
+           <Button type="primary" onClick={addUser}>Add User</Button>        
+        </Col>
+       
         </Row>
         </React.Fragment>
     )

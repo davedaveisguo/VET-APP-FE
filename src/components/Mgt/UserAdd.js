@@ -1,50 +1,26 @@
 import React from 'react'
 import Transition from '../Static/Transition'
-import { useParams } from "react-router-dom";
 import { Form, Input, Button,DatePicker,Row,Col,Select } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import { useEffect } from 'react';
 import { roledata,statusData } from '../DummyData/dummy';
 import axios from '../Api/request';
-import moment from 'moment';
 
 
-export default function UserEdit() {
+export default function UserAdd() {
     const { Option } = Select;
     const [userForm] = useForm();
-    let { id } = useParams();
-    const data = [];
 
 
-    useEffect(() => {
-        axios.get("api/user/getuserById?id="+id)
-        .then(res=>{
-          data.push({
-            ...res.data.data,
-            key:res.data.data.id,
-            dob: moment(new Date(res.data.data.dob)),
-            createdAt:moment(new Date(res.data.data.createdAt)),
-            role:res.data.data.roles[0].roleName,
-            roleId:res.data.data.roles[0].id,
-            password:res.data.data.password,
-            status:res.data.data.status
-          });
-          userForm.setFieldsValue(data[0]); 
-        })
-    }, [data])
 
     
   const onFinish = (values) => {
         
-    axios.post("/api/user/updateUser", {...values, id: id, roles:[{id:values.roleId, roleName:values.role, status:values.status.stsName}]})
+    axios.post("/api/user/addUser", {...values, roles:[{id:values.roleId, roleName:values.role, status:values.status.stsName}]})
         .then(
           res => {
-            console.log(res.data.message);
-            
+            console.log(res.data.message);          
           }
         );
-      // convert moment back to string
-      console.log(moment(values.dob).format('YYYY/MM/DD'));
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -140,19 +116,6 @@ export default function UserEdit() {
                     <Option key={rl.id} value={rl.stsName}>{rl.stsName}</Option>
                 ))}
                 </Select>
-            </Form.Item>
-            <Form.Item
-                hidden
-                name="roleId"
-                label="roleId"
-                rules={[
-                {
-                    required: true,
-                    message: 'Please select your role',
-                },
-                ]}
-            >
-                <Input  placeholder="Please input your role id" />
             </Form.Item>
             <Form.Item
                 name="email"

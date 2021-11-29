@@ -8,6 +8,7 @@ import Auth from './components/Auth/Auth';
 import ResetPwd from './components/Auth/ResetPwd';
 import UserMgt from './components/Mgt/UserMgt';
 import UserEdit from './components/Mgt/UserEdit';
+import UserAdd from './components/Mgt/UserAdd';
 import { authActions } from './store/auth';
 import { useDispatch } from 'react-redux';
 
@@ -38,6 +39,9 @@ function App() {
       </Route>
       <Route path='/userMgt/:id/edit'>
         <UserEdit/>
+      </Route>
+      <Route path='/userMgt/addUser'>
+        <UserAdd/>
       </Route>
       </main>
     </Fragment>
