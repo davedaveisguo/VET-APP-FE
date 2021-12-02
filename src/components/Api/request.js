@@ -32,6 +32,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
     response => {
+        console.log(response);
         if(response.status == 401) {
             //if not authorized redirect back to login
             window.location.href="/"

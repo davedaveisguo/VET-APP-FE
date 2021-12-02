@@ -38,10 +38,11 @@ function App() {
         {isAuth && <UserMgt />}
       </Route>
       <Route path='/userMgt/:id/edit'>
-        <UserEdit/>
+       {isAuth && <UserEdit/>}
       </Route>
       <Route path='/userMgt/addUser'>
-        <UserAdd/>
+      {!isAuth && <Auth />}
+       {isAuth && <UserAdd/>}
       </Route>
       </main>
     </Fragment>

@@ -27,8 +27,8 @@ const UserMgt = () => {
         data.push({
             ...ud,
             key:ud.id,
-            dob: moment(ud.dob).format('YYYY/MM/DD'),
-            createdAt:moment(ud.createdAt).format('YYYY/MM/DD'),
+            dob: moment(new Date(ud.dob)).format('YYYY-MM-DD'),
+            createdAt:moment(new Date(ud.createdAt)).format('YYYY-MM-DD'),
             role:ud.roles?ud.roles[0].roleName:"ROLE_ADMIN"
           })
       });

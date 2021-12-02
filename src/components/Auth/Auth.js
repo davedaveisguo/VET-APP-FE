@@ -105,7 +105,7 @@ const Auth = () => {
               </Form.Item>
             </Form>
       </section>
-      <p>Forgot Password? Please <NavLink activeClassName={classes.active} to="/pwdReset"> Click </NavLink> here to reset</p>
+      <p>Forgot Password? Please <a href="http://localhost:8085/pwd/forgot_password"> Click </a> here to reset</p>
 
     </main>
   );
