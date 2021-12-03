@@ -1,4 +1,13 @@
+  export const ROLE_ADMIN="ROLE_ADMIN";
+  export const ROLE_ANIMALCAREAT="ROLE_ANIMALCAREAT";
+  export const ROLE_ANIMALHTTECH="ROLE_ANIMALHTTECH";
+  export const ROLE_TEACHINGTECH="ROLE_TEACHINGTECH";
+  export const ROLE_STUDENT="ROLE_STUDENT";
 
+
+  export const APPROVED="APPROVED";
+  export const DECLINED="DECLINED";
+  export const PENDING="PENDING";
 
 
   const roleData =[

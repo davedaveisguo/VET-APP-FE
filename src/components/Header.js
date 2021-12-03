@@ -12,6 +12,7 @@ const Header = () => {
 
   function confirm(e) {
     sessionStorage.removeItem("token");
+    localStorage.clear();
     dispatch(authActions.logout());
   }
   

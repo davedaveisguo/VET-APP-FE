@@ -25,6 +25,10 @@ const Auth = () => {
 
     axios.post("/api/auth/signin",{username: values.username, password: values.password})
       .then(res=> {
+          console.log(res.data);
+          localStorage.setItem("userId", res.data.id);
+          localStorage.setItem("userName", res.data.username);
+          localStorage.setItem("role", res.data.roles[0]);
           sessionStorage.setItem("token", res.data.accessToken);
           dispatch(authActions.login());
       }).catch(function (error) {

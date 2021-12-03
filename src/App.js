@@ -9,8 +9,10 @@ import ResetPwd from './components/Auth/ResetPwd';
 import UserMgt from './components/Mgt/UserMgt';
 import UserEdit from './components/Mgt/UserEdit';
 import UserAdd from './components/Mgt/UserAdd';
+import ReqMgt from './components/Mgt/Req/ReqMgt';
 import { authActions } from './store/auth';
 import { useDispatch } from 'react-redux';
+
 
 
 function App() {
@@ -43,6 +45,14 @@ function App() {
       <Route path='/userMgt/addUser'>
       {!isAuth && <Auth />}
        {isAuth && <UserAdd/>}
+      </Route>
+
+
+
+      {/* request mgmt */}
+      <Route path="/reqMgt" exact>
+        {!isAuth && <Auth />}
+        {isAuth && <ReqMgt />}
       </Route>
       </main>
     </Fragment>
